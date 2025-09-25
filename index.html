@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FOLMEX - Sistema de Mantenimiento</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">FOLMEX</h1>
+            <nav class="nav">
+                <a href="index.html" class="nav-link active">Dashboard</a>
+                <a href="errors.html" class="nav-link">Matriz de Errores</a>
+                <a href="reports.html" class="nav-link">Reportes</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <section class="hero">
+                <h2 class="hero-title">Sistema Inteligente de Mantenimiento</h2>
+                <p class="hero-subtitle">Monitoreo en tiempo real y gestión eficiente de operaciones</p>
+            </section>
+
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="error-reduction">60%</div>
+                    <div class="stat-label">Reducción de Errores</div>
+                    <div class="stat-trend positive">↑ Mejora continua</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="optimization">70%</div>
+                    <div class="stat-label">Optimización de Reportes</div>
+                    <div class="stat-trend positive">↑ Mayor eficiencia</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="active-systems">24</div>
+                    <div class="stat-label">Sistemas Activos</div>
+                    <div class="stat-trend neutral">— Estables</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="pending-tasks">3</div>
+                    <div class="stat-label">Tareas Pendientes</div>
+                    <div class="stat-trend attention">! Requiere atención</div>
+                </div>
+            </section>
+
+            <section class="dashboard-grid">
+                <div class="card">
+                    <h3 class="card-title">Estado General del Sistema</h3>
+                    <div class="status-indicator">
+                        <div class="status-light status-green"></div>
+                        <span class="status-text">Operacional</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 87%"></div>
+                    </div>
+                    <p class="status-details">87% de eficiencia operativa</p>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title">Alertas Recientes</h3>
+                    <div class="alert-list">
+                        <div class="alert-item">
+                            <span class="alert-time">09:15</span>
+                            <span class="alert-message">Sistema 3 - Mantenimiento programado</span>
+                        </div>
+                        <div class="alert-item">
+                            <span class="alert-time">08:30</span>
+                            <span class="alert-message">Sensor A2 - Calibración exitosa</span>
+                        </div>
+                        <div class="alert-item">
+                            <span class="alert-time">07:45</span>
+                            <span class="alert-message">Reporte diario generado</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card chart-card">
+                    <h3 class="card-title">Rendimiento en Tiempo Real</h3>
+                    <div class="chart-container">
+                        <canvas id="performance-chart"></canvas>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title">Acciones Rápidas</h3>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="generateReport()">Generar Reporte</button>
+                        <button class="btn btn-secondary" onclick="runDiagnostic()">Ejecutar Diagnóstico</button>
+                        <button class="btn btn-outline" onclick="scheduleMaintenanceSim()">Programar Mantenimiento</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 FOLMEX - Sistema de Mantenimiento Inteligente</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

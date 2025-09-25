@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FOLMEX - Matriz de Errores</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">FOLMEX</h1>
+            <nav class="nav">
+                <a href="index.html" class="nav-link">Dashboard</a>
+                <a href="errors.html" class="nav-link active">Matriz de Errores</a>
+                <a href="reports.html" class="nav-link">Reportes</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <section class="page-header">
+                <h2 class="page-title">Matriz de Errores y Soluciones</h2>
+                <p class="page-subtitle">Identificación y resolución inteligente de problemas</p>
+            </section>
+
+            <section class="filters">
+                <div class="filter-group">
+                    <label for="priority-filter">Prioridad:</label>
+                    <select id="priority-filter" class="filter-select" onchange="filterErrors()">
+                        <option value="all">Todas</option>
+                        <option value="high">Alta</option>
+                        <option value="medium">Media</option>
+                        <option value="low">Baja</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="status-filter">Estado:</label>
+                    <select id="status-filter" class="filter-select" onchange="filterErrors()">
+                        <option value="all">Todos</option>
+                        <option value="active">Activo</option>
+                        <option value="resolved">Resuelto</option>
+                        <option value="pending">Pendiente</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" onclick="addNewError()">Registrar Nuevo Error</button>
+            </section>
+
+            <section class="errors-table">
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Descripción</th>
+                                <th>Sistema</th>
+                                <th>Prioridad</th>
+                                <th>Estado</th>
+                                <th>Solución Sugerida</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="errors-tbody">
+                            <tr data-priority="high" data-status="active">
+                                <td>ERR-001</td>
+                                <td>Temperatura elevada en motor principal</td>
+                                <td>Sistema A</td>
+                                <td><span class="priority high">Alta</span></td>
+                                <td><span class="status active">Activo</span></td>
+                                <td>Verificar sistema de refrigeración</td>
+                                <td>
+                                    <button class="btn-small btn-primary" onclick="viewSolution('ERR-001')">Ver Solución</button>
+                                    <button class="btn-small btn-success" onclick="markResolved('ERR-001')">Resolver</button>
+                                </td>
+                            </tr>
+                            <tr data-priority="medium" data-status="pending">
+                                <td>ERR-002</td>
+                                <td>Sensor de presión desajustado</td>
+                                <td>Sistema B</td>
+                                <td><span class="priority medium">Media</span></td>
+                                <td><span class="status pending">Pendiente</span></td>
+                                <td>Calibrar sensor según manual</td>
+                                <td>
+                                    <button class="btn-small btn-primary" onclick="viewSolution('ERR-002')">Ver Solución</button>
+                                    <button class="btn-small btn-success" onclick="markResolved('ERR-002')">Resolver</button>
+                                </td>
+                            </tr>
+                            <tr data-priority="low" data-status="resolved">
+                                <td>ERR-003</td>
+                                <td>Lubricación insuficiente</td>
+                                <td>Sistema C</td>
+                                <td><span class="priority low">Baja</span></td>
+                                <td><span class="status resolved">Resuelto</span></td>
+                                <td>Aplicar lubricante tipo X</td>
+                                <td>
+                                    <button class="btn-small btn-outline" onclick="viewHistory('ERR-003')">Ver Historial</button>
+                                </td>
+                            </tr>
+                            <tr data-priority="high" data-status="active">
+                                <td>ERR-004</td>
+                                <td>Vibración anormal en eje Y</td>
+                                <td>Sistema A</td>
+                                <td><span class="priority high">Alta</span></td>
+                                <td><span class="status active">Activo</span></td>
+                                <td>Inspeccionar rodamientos</td>
+                                <td>
+                                    <button class="btn-small btn-primary" onclick="viewSolution('ERR-004')">Ver Solución</button>
+                                    <button class="btn-small btn-success" onclick="markResolved('ERR-004')">Resolver</button>
+                                </td>
+                            </tr>
+                            <tr data-priority="medium" data-status="pending">
+                                <td>ERR-005</td>
+                                <td>Conexión intermitente en panel</td>
+                                <td>Sistema D</td>
+                                <td><span class="priority medium">Media</span></td>
+                                <td><span class="status pending">Pendiente</span></td>
+                                <td>Revisar conectores y cables</td>
+                                <td>
+                                    <button class="btn-small btn-primary" onclick="viewSolution('ERR-005')">Ver Solución</button>
+                                    <button class="btn-small btn-success" onclick="markResolved('ERR-005')">Resolver</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="error-stats">
+                <div class="card">
+                    <h3 class="card-title">Estadísticas de Errores</h3>
+                    <div class="stats-grid-small">
+                        <div class="stat-item">
+                            <span class="stat-value" id="total-errors">5</span>
+                            <span class="stat-name">Total de Errores</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="active-errors">3</span>
+                            <span class="stat-name">Activos</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="resolved-errors">1</span>
+                            <span class="stat-name">Resueltos</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="pending-errors">1</span>
+                            <span class="stat-name">Pendientes</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Modal para soluciones -->
+    <div id="solution-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeSolutionModal()">&times;</span>
+            <h3 id="modal-title">Solución Detallada</h3>
+            <div id="modal-body">
+                <!-- Contenido dinámico -->
+            </div>
+            <button class="btn btn-outline" onclick="closeSolutionModal()">Cerrar</button>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 FOLMEX - Sistema de Mantenimiento Inteligente</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

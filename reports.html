@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FOLMEX - Reportes</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">FOLMEX</h1>
+            <nav class="nav">
+                <a href="index.html" class="nav-link">Dashboard</a>
+                <a href="errors.html" class="nav-link">Matriz de Errores</a>
+                <a href="reports.html" class="nav-link active">Reportes</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <section class="page-header">
+                <h2 class="page-title">Centro de Reportes</h2>
+                <p class="page-subtitle">Análisis y documentación optimizada del sistema</p>
+            </section>
+
+            <section class="report-controls">
+                <div class="control-group">
+                    <label for="report-type">Tipo de Reporte:</label>
+                    <select id="report-type" class="filter-select" onchange="updateReportOptions()">
+                        <option value="daily">Diario</option>
+                        <option value="weekly">Semanal</option>
+                        <option value="monthly">Mensual</option>
+                        <option value="custom">Personalizado</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label for="date-range">Rango de Fechas:</label>
+                    <input type="date" id="start-date" class="date-input" value="2024-01-01">
+                    <span>a</span>
+                    <input type="date" id="end-date" class="date-input" value="2024-01-31">
+                </div>
+                <button class="btn btn-primary" onclick="generateCustomReport()">Generar Reporte</button>
+            </section>
+
+            <section class="reports-grid">
+                <div class="card">
+                    <h3 class="card-title">Resumen de Eficiencia</h3>
+                    <div class="efficiency-chart">
+                        <canvas id="efficiency-chart"></canvas>
+                    </div>
+                    <div class="chart-legend">
+                        <div class="legend-item">
+                            <span class="legend-color" style="background-color: #4CAF50;"></span>
+                            <span>Óptimo</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background-color: #FFC107;"></span>
+                            <span>Regular</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background-color: #F44336;"></span>
+                            <span>Crítico</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title">Métricas Clave</h3>
+                    <div class="metrics-list">
+                        <div class="metric-row">
+                            <span class="metric-label">Tiempo Promedio de Respuesta</span>
+                            <span class="metric-value">2.3 min</span>
+                            <span class="metric-change positive">-15%</span>
+                        </div>
+                        <div class="metric-row">
+                            <span class="metric-label">Disponibilidad del Sistema</span>
+                            <span class="metric-value">99.2%</span>
+                            <span class="metric-change positive">+0.8%</span>
+                        </div>
+                        <div class="metric-row">
+                            <span class="metric-label">Errores Resueltos</span>
+                            <span class="metric-value">47</span>
+                            <span class="metric-change positive">+12</span>
+                        </div>
+                        <div class="metric-row">
+                            <span class="metric-label">Mantenimientos Preventivos</span>
+                            <span class="metric-value">8</span>
+                            <span class="metric-change neutral">+0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title">Tendencias de Mantenimiento</h3>
+                    <div class="trend-chart">
+                        <canvas id="trend-chart"></canvas>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title">Reportes Disponibles</h3>
+                    <div class="report-list">
+                        <div class="report-item">
+                            <div class="report-info">
+                                <h4>Reporte Diario - 24 Sep 2024</h4>
+                                <p>Resumen de actividades y métricas del día</p>
+                                <span class="report-date">Generado: 09:00 AM</span>
+                            </div>
+                            <div class="report-actions">
+                                <button class="btn-small btn-outline" onclick="downloadReport('daily')">Descargar</button>
+                                <button class="btn-small btn-primary" onclick="viewReport('daily')">Ver</button>
+                            </div>
+                        </div>
+                        <div class="report-item">
+                            <div class="report-info">
+                                <h4>Reporte Semanal - Sep 16-22</h4>
+                                <p>Análisis semanal de rendimiento y errores</p>
+                                <span class="report-date">Generado: 23 Sep, 06:00 PM</span>
+                            </div>
+                            <div class="report-actions">
+                                <button class="btn-small btn-outline" onclick="downloadReport('weekly')">Descargar</button>
+                                <button class="btn-small btn-primary" onclick="viewReport('weekly')">Ver</button>
+                            </div>
+                        </div>
+                        <div class="report-item">
+                            <div class="report-info">
+                                <h4>Reporte Mensual - Agosto 2024</h4>
+                                <p>Informe completo mensual con tendencias</p>
+                                <span class="report-date">Generado: 01 Sep, 08:00 AM</span>
+                            </div>
+                            <div class="report-actions">
+                                <button class="btn-small btn-outline" onclick="downloadReport('monthly')">Descargar</button>
+                                <button class="btn-small btn-primary" onclick="viewReport('monthly')">Ver</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="export-options">
+                <div class="card">
+                    <h3 class="card-title">Opciones de Exportación</h3>
+                    <div class="export-buttons">
+                        <button class="btn btn-secondary" onclick="exportToPDF()">Exportar a PDF</button>
+                        <button class="btn btn-secondary" onclick="exportToExcel()">Exportar a Excel</button>
+                        <button class="btn btn-secondary" onclick="exportToCSV()">Exportar a CSV</button>
+                        <button class="btn btn-outline" onclick="scheduleReport()">Programar Reporte</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Modal para vista previa de reportes -->
+    <div id="report-modal" class="modal">
+        <div class="modal-content modal-large">
+            <span class="close" onclick="closeReportModal()">&times;</span>
+            <h3 id="report-modal-title">Vista Previa del Reporte</h3>
+            <div id="report-modal-body">
+                <!-- Contenido dinámico -->
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-primary" onclick="downloadCurrentReport()">Descargar</button>
+                <button class="btn btn-outline" onclick="closeReportModal()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 FOLMEX - Sistema de Mantenimiento Inteligente</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
